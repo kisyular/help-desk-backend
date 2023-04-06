@@ -35,6 +35,8 @@ app.use(cors(corsOptions))
 
 app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/', require('./routes/root'))
+app.use('/api/v1/users', require('./routes/userRoute'))
+app.use('/api/v1/notes', require('./routes/noteRoute'))
 
 app.all('*', (req, res) => {
 	res.status(404)
