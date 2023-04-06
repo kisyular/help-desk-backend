@@ -2,64 +2,23 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/style.css" />
 		<title>Sticky Notes App</title>
 		<style>
-			body {
+			/* Add animation to the text */
+			h3 {
 				margin: 0;
-				padding: 0;
-				font-family: Arial, sans-serif;
-				background-color: black;
+				animation: shake 0.5s ease-in-out 1s infinite alternate;
 			}
 
-			.container {
-				width: 80%;
-				margin: 0 auto;
-				padding-top: 20px;
-			}
-
-			h1 {
-				text-align: center;
-				font-size: 48px;
-				color: yellow;
-			}
-
-			.img-container {
-				display: flex;
-				justify-content: center;
-				margin-top: 30px;
-			}
-
-			img {
-				width: 400px;
-				height: auto;
-			}
-
-			.features {
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: center;
-				margin-top: 30px;
-			}
-
-			.feature {
-				width: 30%;
-				margin: 20px;
-				padding: 30px;
-				text-align: center;
-				background-color: #fff;
-				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-				border-radius: 5px;
-			}
-
-			.feature h3 {
-				font-size: 32px;
-				color: black;
-				margin-bottom: 20px;
-			}
-
-			.feature p {
-				font-size: 18px;
-				color: black;
+			/* Keyframes for the animation */
+			@keyframes shake {
+				from {
+					transform: translateX(-20px);
+				}
+				to {
+					transform: translateX(20px);
+				}
 			}
 		</style>
 	</head>
@@ -68,10 +27,7 @@
 			<h1>Sticky Notes App</h1>
 
 			<div class="img-container">
-				<img
-					src="../public/images/sticky-notes.png"
-					alt="Sticky Notes App"
-				/>
+				<img src="/images/404.gif" alt="Sticky Notes App" />
 			</div>
 
 			<div class="features">
