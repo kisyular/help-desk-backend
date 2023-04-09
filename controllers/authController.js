@@ -15,8 +15,14 @@ const login = asyncHandler(async (req, res) => {
 
 	const foundUser = await User.findOne({ username }).exec()
 
-	if (!foundUser || !foundUser.active) {
+	if (!foundUser) {
 		return res.status(401).json({ message: 'Invalid Credentials' })
+	}
+
+	if (foundUser && !foundUser.active) {
+		return res
+			.status(401)
+			.json({ message: 'Your account was disabled by the administrator' })
 	}
 
 	const match = await bcrypt.compare(password, foundUser.password)
@@ -28,6 +34,7 @@ const login = asyncHandler(async (req, res) => {
 			UserInfo: {
 				username: foundUser.username,
 				roles: foundUser.roles,
+				name: foundUser.name,
 			},
 		},
 		process.env.ACCESS_TOKEN_SECRET,
@@ -43,7 +50,7 @@ const login = asyncHandler(async (req, res) => {
 	// Create secure cookie with refresh token
 	res.cookie('jwt', refreshToken, {
 		httpOnly: true, //accessible only by web server
-		// secure: true, //https
+		secure: true, //https
 		sameSite: 'None', //cross-site cookie
 		maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
 	})
@@ -58,7 +65,8 @@ const login = asyncHandler(async (req, res) => {
 const refresh = (req, res) => {
 	const cookies = req.cookies
 
-	if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized' })
+	if (!cookies?.jwt)
+		return res.status(401).json({ message: 'Invalid Credentials' })
 
 	const refreshToken = cookies.jwt
 
@@ -73,13 +81,14 @@ const refresh = (req, res) => {
 			}).exec()
 
 			if (!foundUser)
-				return res.status(401).json({ message: 'Unauthorized' })
+				return res.status(401).json({ message: 'Invalid Credentials' })
 
 			const accessToken = jwt.sign(
 				{
 					UserInfo: {
 						username: foundUser.username,
 						roles: foundUser.roles,
+						name: foundUser.name,
 					},
 				},
 				process.env.ACCESS_TOKEN_SECRET,
@@ -100,7 +109,7 @@ const logout = (req, res) => {
 	res.clearCookie('jwt', {
 		httpOnly: true,
 		sameSite: 'None',
-		// secure: true
+		secure: true,
 	})
 	res.json({ message: 'Cookie cleared' })
 }
