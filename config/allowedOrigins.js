@@ -4,6 +4,7 @@ const allowedOrigins = [
 	'https://google.com',
 	'https://www.kisyula.com',
 	'https://kisyula.com',
+	'khelpdesk.onrender.com',
 ]
 
 module.exports = allowedOrigins
