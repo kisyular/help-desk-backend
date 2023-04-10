@@ -1,7 +1,7 @@
 const allowedOrigins = [
 	'https://www.kisyula.com',
 	'https://kisyula.com',
-	'khelpdesk.onrender.com',
+	'https://helpdesk-v6b2.onrender.com',
 ]
 
 module.exports = allowedOrigins
